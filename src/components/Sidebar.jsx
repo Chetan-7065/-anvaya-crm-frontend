@@ -34,7 +34,7 @@ export default function Sidebar() {
       >
         <li className="nav-item w-100 text-center text-md-start">
           <Link
-            to={"/leadsManagement/69cbf5ca51748d1f57df4995"}
+            to={"/leads"}
             className="nav-link text-white px-2 px-md-3"
             aria-current="page"
           >
@@ -42,14 +42,14 @@ export default function Sidebar() {
             <span className="d-none d-md-inline">Leads</span>
           </Link>
         </li>
-        <li className="w-100 text-center text-md-start">
-          <Link to={"/salesAgentManagement"} className="nav-link text-white px-2 px-md-3">
+        {/* <li className="w-100 text-center text-md-start">
+          <Link to={"/leads"}  className="nav-link text-white px-2 px-md-3">
             <i className="bi bi-graph-up fs-5 me-0 me-md-2"></i>
             <span className="d-none d-md-inline">Sales</span>
           </Link>
-        </li>
+        </li> */}
         <li className="w-100 text-center text-md-start">
-          <Link to={"/leads"} className="nav-link text-white px-2 px-md-3">
+          <Link to={"/salesAgentManagement"} className="nav-link text-white px-2 px-md-3">
             <i className="bi bi-people fs-5 me-0 me-md-2"></i>
             <span className="d-none d-md-inline">Agents</span>
           </Link>

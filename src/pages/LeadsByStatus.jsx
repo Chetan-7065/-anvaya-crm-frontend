@@ -69,7 +69,7 @@ export default function LeadsByStatus() {
       <div className="col-12 col-xl-10">
         
         {/* Main Headings */}
-        <header className="mb-4">
+        <div className="mb-4">
           <h1 className="display-5 display-md-4 text-primary mb-2 ">
             Lead By Status
           </h1>
@@ -77,7 +77,7 @@ export default function LeadsByStatus() {
             <i className="bi bi-list-ul me-2"></i>
             Leads List by Status
           </h2>
-        </header>
+        </div>
 
         {/* List Group Section */}
         <div className="row mb-4">
@@ -188,7 +188,7 @@ export default function LeadsByStatus() {
                     <div className="flex-fill" style={{ minWidth: "200px", maxWidth: "300px" }}>
                       <select
                         name="priority"
-                        className="form-select border border-2 bg-light shadow-sm py-2"
+                        className="form-select border border-2 bg-white shadow-sm py-2"
                         onChange={handleFilterChange}
                       >
                         <option defaultValue value="High">Priority: High</option>
@@ -200,7 +200,7 @@ export default function LeadsByStatus() {
                     <div className="flex-fill" style={{ minWidth: "200px", maxWidth: "300px" }}>
                       <select
                         name="salesAgent"
-                        className="form-select border border-2 bg-light shadow-sm py-2"
+                        className="form-select border border-2 bg-white shadow-sm py-2"
                         onChange={handleFilterChange}
                       >
                         <option defaultValue value="All">Sales Agent: All</option>
