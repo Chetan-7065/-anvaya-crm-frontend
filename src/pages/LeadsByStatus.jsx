@@ -55,12 +55,6 @@ export default function LeadsByStatus() {
     setDisplayLeads(sortedData);
   }
 
-  const rawLeadsData = [
-    { id: 1, name: "John Doe", agent: "Sarah Williams" },
-    { id: 2, name: "Alice Johnson", agent: "Michael Chen" },
-    { id: 3, name: "Robert Smith", agent: "Sarah Williams" },
-  ];
-
   return (
    <>
   <main className="container-fluid px-2 px-sm-3 px-md-4 py-3 py-md-4">
@@ -85,9 +79,8 @@ export default function LeadsByStatus() {
             <section className="card shadow-sm border-0 overflow-hidden">
               <div className="card-header bg-primary text-white d-flex align-items-center py-3">
                 <i className="bi bi-plus-circle-dotted me-2 text-white-50"></i>
-                <h3 className="h5 mb-0 fw-semibold">Status: New</h3>
+                <h3 className="h5 mb-0 fw-semibold">Status: {status}</h3>
               </div>
-
               <ul className="list-group list-group-flush">
                 {/* Header Row - Maintained tight alignment spaces */}
                 <li className="list-group-item bg-light border-bottom">
