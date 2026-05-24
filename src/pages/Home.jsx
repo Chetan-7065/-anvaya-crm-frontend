@@ -103,7 +103,7 @@ export default function Home() {
     <>
   <main className="container-fluid px-0 overflow-hidden">
     <div className="row justify-content-center g-0">
-      <div className="col m-2 m-sm-3" style={{ height: "calc(100vh - 70px)", overflowY: "auto" }}>
+      <div className="col m-2 m-sm-3" >
         <div
           data-bs-spy="scroll"
           data-bs-offset="0"
