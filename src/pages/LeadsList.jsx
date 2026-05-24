@@ -199,7 +199,7 @@ export default function LeadsList() {
                 <div className="flex-fill" style={{ minWidth: "220px", maxWidth: "300px" }}>
                   <select
                     name="status"
-                    className="form-select border border-2 bg-light shadow-sm py-2"
+                    className="form-select border border-2 bg-white shadow-sm py-2"
                     value={filterData.status}
                     onChange={handleFilterChange}
                   >
@@ -214,7 +214,7 @@ export default function LeadsList() {
                 <div className="flex-fill" style={{ minWidth: "220px", maxWidth: "300px" }}>
                   <select
                     name="salesAgent"
-                    className="form-select border border-2 bg-light shadow-sm py-2"
+                    className="form-select border border-2 bg-white shadow-sm py-2"
                     onChange={handleFilterChange}
                   >
                     <option value="All">Sales Agent: All</option>
