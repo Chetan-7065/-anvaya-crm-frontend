@@ -18,6 +18,40 @@ export default function Setting() {
       setLeads(data);
     }
   }, [data]);
+const [leadName, setLeadName] = useState("");
+  const [salesAgentName, setSalesAgentName] = useState("");
+
+  // --- Section 2: Sales Agent Management State ---
+  const [agentName, setAgentName] = useState("");
+  const [agentEmail, setAgentEmail] = useState("");
+
+  // Handler for Lead Form Submit
+  const handleLeadSubmit = (e) => {
+    e.preventDefault();
+    
+    const leadPayload = {
+      lead: leadName,
+      salesAgent: salesAgentName,
+    };
+
+    console.log("Deleted Lead Payload Object:", leadPayload);
+    alert("Lead Form Object Sample:\n" + JSON.stringify(leadPayload, null, 2));
+  };
+
+  // Handler for Sales Agent Form Submit
+  const handleAgentSubmit = (e) => {
+    e.preventDefault();
+
+    // The precise object layout requested for the agent
+    const agentPayload = {
+      name: agentName,
+      email: agentEmail,
+    };
+
+    console.log("Deleted Agent Payload Object:", agentPayload);
+    alert("Agent Form Object Sample:\n" + JSON.stringify(agentPayload, null, 2));
+  };
+  
   function downloadCSV(data) {
     if (data.length === 0) return;
 
@@ -48,11 +82,6 @@ export default function Setting() {
     document.body.removeChild(link);
   }
 
-  // Hardcoded handlers just for demonstration
-  const handleSaveProfile = (e) => {
-    e.preventDefault();
-    // alert('Profile saved successfully!');
-  };
 
   const handleExportCSV = () => {
     downloadCSV(leads);
@@ -75,8 +104,128 @@ export default function Setting() {
             </span>
           </div>
 
+          <div className="mx-auto" style={{ maxWidth: "800px" }}>
+        
+        
+        {/* SECTION 1: LEAD MANAGEMENT CONTRTOL                       */}
+
+        <section className="card shadow-sm mb-4">
+          <header className="card-header bg-white py-3">
+            <h2 className="h4 text-dark mb-0 fw-semibold">Lead Management Control</h2>
+          </header>
+
+          <div className="card-body p-4">
+            <h3 className="h5 text-danger mb-1 fw-medium">Delete Lead</h3>
+            <p className="text-muted small mb-4">
+              Warning: Proceed with caution. Input details precisely to execute removal operations.
+            </p>
+
+            <form onSubmit={handleLeadSubmit}>
+              <div className="row g-3 mb-4">
+                <div className="col-md-6">
+                  <label htmlFor="leadInput" className="form-label small fw-medium text-secondary">
+                    Lead Name
+                  </label>
+                  <input
+                    id="leadInput"
+                    type="text"
+                    className="form-control"
+                    placeholder="Enter Lead Name"
+                    value={leadName}
+                    onChange={(e) => setLeadName(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="col-md-6">
+                  <label htmlFor="agentInput" className="form-label small fw-medium text-secondary">
+                    Sales Agent Name
+                  </label>
+                  <input
+                    id="agentInput"
+                    type="text"
+                    className="form-control"
+                    placeholder="Enter Sales Agent Name"
+                    value={salesAgentName}
+                    onChange={(e) => setSalesAgentName(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="d-flex justify-content-end">
+                <button type="submit" className="btn btn-danger px-4 fw-medium">
+                  Delete Lead Record
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        {/* SECTION 2: SALES AGENT CONTRTOL (NEW)                     */}
+      
+        <section className="card shadow-sm mb-4">
+          <header className="card-header bg-white py-3">
+            <h2 className="h4 text-dark mb-0 fw-semibold">Agent Access Management</h2>
+          </header>
+
+          <div className="card-body p-4">
+            <h3 className="h5 text-danger mb-1 fw-medium">Delete Sales Agent</h3>
+            <p className="text-muted small mb-4">
+              Warning: Removing an agent will restrict system login permissions. Enter exact verified credentials.
+            </p>
+
+            <form onSubmit={handleAgentSubmit}>
+              <div className="row g-3 mb-4">
+                
+                {/* Input 1: Agent Name */}
+                <div className="col-md-6">
+                  <label htmlFor="salesAgentProfileName" className="form-label small fw-medium text-secondary">
+                    Agent Name
+                  </label>
+                  <input
+                    id="salesAgentProfileName"
+                    type="text"
+                    className="form-control"
+                    placeholder="Enter Agent Full Name"
+                    value={agentName}
+                    onChange={(e) => setAgentName(e.target.value)}
+                    required
+                  />
+                </div>
+
+                {/* Input 2: Agent Email (with built-in validation format) */}
+                <div className="col-md-6">
+                  <label htmlFor="salesAgentEmail" className="form-label small fw-medium text-secondary">
+                    Agent Email Address
+                  </label>
+                  <input
+                    id="salesAgentEmail"
+                    type="email" // Automatically blocks non-email configurations like names/numbers
+                    className="form-control"
+                    placeholder="example@company.com"
+                    value={agentEmail}
+                    onChange={(e) => setAgentEmail(e.target.value)}
+                    required
+                  />
+                  <div className="form-text text-muted small">Must be a valid email structure.</div>
+                </div>
+
+              </div>
+
+              {/* Delete Agent Action button */}
+              <div className="d-flex justify-content-end">
+                <button type="submit" className="btn btn-danger px-4 fw-medium">
+                  Delete Agent Account
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+      </div>
+
           {/* SECTION 1: SYSTEM PREFERENCES & UTILITIES */}
-          <div className="card border-secondary mb-4 style-rectangle shadow-sm">
+          <div className="card  mb-4 style-rectangle shadow-sm">
             <div className="card-header bg-transparent border-secondary fw-semibold py-3">
               <i className="bi bi-sliders me-2 text-primary"></i>System Preferences
             </div>

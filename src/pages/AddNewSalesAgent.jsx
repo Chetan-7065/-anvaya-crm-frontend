@@ -2,12 +2,15 @@ import { useState } from "react";
 import axios from "axios";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
+import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+
 export default function AddNewSalesAgent() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
   });
-
+  const navigate = useNavigate()
   function handleChange(e) {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -22,6 +25,8 @@ export default function AddNewSalesAgent() {
         formData,
       );
       console.log(response.data);
+      navigate("/salesAgentManagement")
+      toast.success("New lead Added successfully");
     } catch (error) {
       if (error.response) {
         console.log("Status:", error.response.status);

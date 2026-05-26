@@ -6,7 +6,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { useToastLoader } from "../components/useToastLoader";
 import axios from "axios";
 
-export default function LeadsManagement({ refreshData, closeModal }) {
+export default function LeadsManagement() {
   const [comment, setComment] = useState([]);
   const [displayComments, setDisplayComments] = useState([]);
   const [lead, setLead] = useState([]);
@@ -37,11 +37,17 @@ export default function LeadsManagement({ refreshData, closeModal }) {
     timeToClose: "",
     tags: [],
   });
-  
+  const [commentFormData, setCommentFormData] = useState({
+    lead:"",
+    author: "",
+    commentText: "",
+  });
+
   const {
     data: commentsData,
     loading: commentsLoading,
     error: commentsError,
+    refetch: commentsRefetch
   } = useFetch(
     `https://anvaya-crm-backend-puce.vercel.app/leads/${leadId}/comments`,
   );
@@ -68,23 +74,25 @@ export default function LeadsManagement({ refreshData, closeModal }) {
       setDisplayComments(commentsData);
     }
     if (leadsData && leadsData.length > 0) {
-      setLead(leadsData.filter((lead) => lead._id === leadId));
+      const selectedLead = leadsData.filter((lead) => lead._id === leadId)
+      setLead(selectedLead);
     }
     if (agentsData && agentsData.length > 0) {
       setSalesAgent(agentsData);
     }
   }, [commentsData, leadsData, agentsData]);
 
-  
+  console.log(commentsData)
   const handleEditChanges = (leadId) => {
     const changeLead = leadsData.find((lead) => lead._id === leadId);
     if (changeLead) {
       setFormData(changeLead);
       setAgentId(changeLead.salesAgent._id);
+     
     }
   };
 
- 
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -102,6 +110,26 @@ export default function LeadsManagement({ refreshData, closeModal }) {
     }
   };
 
+  const handleCommentChange = (e) => {
+    const { name, value } = e.target;
+
+    if (name === "author") {
+      const selectedAgent = salesAgent.find((agent) => agent._id === value);
+
+      setCommentFormData({
+        ...commentFormData,
+        lead: leadId,
+        author: selectedAgent
+          ? { _id: selectedAgent._id, name: selectedAgent.name }
+          : "",
+      });
+    } else {
+      setCommentFormData({ ...commentFormData, [name]: value });
+    }
+  };
+
+  console.log(commentFormData)
+
   const handleMultiSelect = (e, field) => {
     const options = [...e.target.selectedOptions].map((opt) => opt.value);
     setFormData({ ...formData, [field]: options });
@@ -111,16 +139,15 @@ export default function LeadsManagement({ refreshData, closeModal }) {
     e.preventDefault();
     const payload = {
       ...formData,
-      salesAgent: formData.salesAgent?._id,
+      author: formData.salesAgent?._id,
     };
     console.log("Lead Created:", payload);
     try {
       const response = await axios.post(
-        `https://anvaya-crm-backend-puce.vercel.app/leads/${formData._id}`,
+        `https://anvaya-crm-backend-puce.vercel.app/leads/${leadId}/comments`,
         payload,
       );
       refetch();
-      if (refreshData) refreshData();
     } catch (error) {
       if (error.response) {
         console.log("Status: ", error.response.status);
@@ -133,6 +160,31 @@ export default function LeadsManagement({ refreshData, closeModal }) {
     }
   };
 
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+    const payload = {
+      ...commentFormData,
+      author: commentFormData.author?._id,
+    };
+    console.log("Comment Created:", payload);
+    try {
+      const response = await axios.post(
+        `https://anvaya-crm-backend-puce.vercel.app/leads/${leadId}/comments`,
+        payload,
+      );
+      commentsRefetch();
+    } catch (error) {
+      if (error.response) {
+        console.log("Status: ", error.response.status);
+        console.log("Data: ", error.response.data);
+      } else if (error.request) {
+        console.log("Network error: Is the backend running?");
+      } else {
+        console.log("Setup Error: ", error.message);
+      }
+    }
+  };
+    console.log(displayComments)
   return (
     <>
       <main>
@@ -228,7 +280,7 @@ export default function LeadsManagement({ refreshData, closeModal }) {
                           <span
                             className="label-width text-dark fw-semibold mb-2 mb-sm-0"
                             style={{
-                              minWidth: "140px", 
+                              minWidth: "140px",
                               display: "inline-block",
                             }}
                           >
@@ -236,7 +288,6 @@ export default function LeadsManagement({ refreshData, closeModal }) {
                             Lead Status:
                           </span>
 
-                        
                           <span className="badge bg-primary px-3 py-2 text-wrap text-start">
                             {item.status}
                           </span>
@@ -356,21 +407,52 @@ export default function LeadsManagement({ refreshData, closeModal }) {
 
               {/* Input strip */}
               <div className="position-absolute bottom-0 w-100 p-3 bg-white border-top shadow-lg z-3">
-                <div className="input-group">
+                <form onSubmit={handleCommentSubmit}>
+                <div className="input-group ">
+                  {/* Agent Selector Dropdown */}
+                  <select
+                    className="form-select border-light-subtle bg-white text-muted"
+                    name= "author"
+                    value={formData.salesAgent?._id }
+                    onChange={handleCommentChange}
+                    style={{
+                      maxWidth: "180px",
+                      paddingLeft: "1rem",
+                      fontSize: "1rem",
+                      cursor: "pointer",
+                    }}
+                   
+                  >
+                    <option value="" hidden>Select agent...</option>
+                    {salesAgent.map((agent) => (
+                      <option key={agent._id} value={agent._id}>
+                        {agent.name}
+                      </option>
+                    ))}
+                  </select>
+
+                  {/* Text Input */}
                   <input
                     type="text"
+                    name="commentText"
+                    value={commentFormData.commentText}
+                    onChange={handleCommentChange}
                     className="form-control border-light-subtle bg-light"
                     placeholder="Type a quick update..."
                     style={{ padding: "0.75rem 1.25rem", fontSize: "1.1rem" }}
                   />
+
+                  {/* Post Button */}
                   <button
                     className="btn btn-primary px-4 d-flex align-items-center"
-                    type="button"
+                    type="submit"
+                    
                   >
                     <i className="bi bi-send-fill me-2"></i>
                     Post
                   </button>
                 </div>
+                </form>
               </div>
             </div>
 

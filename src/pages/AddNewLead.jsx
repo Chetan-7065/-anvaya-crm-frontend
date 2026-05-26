@@ -3,6 +3,8 @@ import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import useFetch from "../useFetch";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 export default function AddNewLead() {
   const [formData, setFormData] = useState({
@@ -14,7 +16,7 @@ export default function AddNewLead() {
     timeToClose: "",
     tags: [],
   });
-
+  const navigate = useNavigate()
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -25,6 +27,8 @@ export default function AddNewLead() {
     setFormData({ ...formData, [field]: options });
   };
 
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Lead Created:", formData);
@@ -32,6 +36,8 @@ export default function AddNewLead() {
     try{
       const response = await axios.post("https://anvaya-crm-backend-puce.vercel.app/leads", formData)
       console.log(response.data)
+      navigate("/leads")
+       toast.success("New lead Added successfully");
     }catch(error){
       if(error.response){
         console.log("Status: ", error.response.status)
@@ -101,7 +107,7 @@ export default function AddNewLead() {
 
             {/* Row: Sales Agent */}
             <div className="col-12 mb-3 mb-md-4">
-              <label className="form-label fw-semibold text-secondary">Sales Agent (Ctrl/Cmd to select multiple):</label>
+              <label className="form-label fw-semibold text-secondary">Sales Agent :</label>
               <select
                 name="salesAgent"
                 className="form-select border-2 py-2"
@@ -162,7 +168,7 @@ export default function AddNewLead() {
 
             {/* Row: Tags */}
             <div className="col-12 mb-4">
-              <label className="form-label fw-semibold text-secondary">Tags:</label>
+              <label className="form-label fw-semibold text-secondary">Tags (Ctrl/Cmd to select multiple):</label>
               <select
                 multiple
                 name="tags"
