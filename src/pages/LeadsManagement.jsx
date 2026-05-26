@@ -5,6 +5,7 @@ import useFetch from "../useFetch";
 import { useParams, useSearchParams } from "react-router-dom";
 import { useToastLoader } from "../components/useToastLoader";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function LeadsManagement() {
   const [comment, setComment] = useState([]);
@@ -38,7 +39,7 @@ export default function LeadsManagement() {
     tags: [],
   });
   const [commentFormData, setCommentFormData] = useState({
-    lead:"",
+    lead: "",
     author: "",
     commentText: "",
   });
@@ -47,7 +48,7 @@ export default function LeadsManagement() {
     data: commentsData,
     loading: commentsLoading,
     error: commentsError,
-    refetch: commentsRefetch
+    refetch: commentsRefetch,
   } = useFetch(
     `https://anvaya-crm-backend-puce.vercel.app/leads/${leadId}/comments`,
   );
@@ -74,7 +75,7 @@ export default function LeadsManagement() {
       setDisplayComments(commentsData);
     }
     if (leadsData && leadsData.length > 0) {
-      const selectedLead = leadsData.filter((lead) => lead._id === leadId)
+      const selectedLead = leadsData.filter((lead) => lead._id === leadId);
       setLead(selectedLead);
     }
     if (agentsData && agentsData.length > 0) {
@@ -82,17 +83,15 @@ export default function LeadsManagement() {
     }
   }, [commentsData, leadsData, agentsData]);
 
-  console.log(commentsData)
+  console.log(commentsData);
   const handleEditChanges = (leadId) => {
     const changeLead = leadsData.find((lead) => lead._id === leadId);
     if (changeLead) {
       setFormData(changeLead);
       setAgentId(changeLead.salesAgent._id);
-     
     }
   };
 
-  
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -128,7 +127,7 @@ export default function LeadsManagement() {
     }
   };
 
-  console.log(commentFormData)
+  console.log(commentFormData);
 
   const handleMultiSelect = (e, field) => {
     const options = [...e.target.selectedOptions].map((opt) => opt.value);
@@ -147,6 +146,7 @@ export default function LeadsManagement() {
         `https://anvaya-crm-backend-puce.vercel.app/leads/${leadId}/comments`,
         payload,
       );
+      toast.success("Lead updated successfully");
       refetch();
     } catch (error) {
       if (error.response) {
@@ -172,6 +172,12 @@ export default function LeadsManagement() {
         `https://anvaya-crm-backend-puce.vercel.app/leads/${leadId}/comments`,
         payload,
       );
+      toast.success("Comment updated successfully");
+      setCommentFormData({
+        lead: "",
+        author: "",
+        commentText: "",
+      });
       commentsRefetch();
     } catch (error) {
       if (error.response) {
@@ -184,7 +190,7 @@ export default function LeadsManagement() {
       }
     }
   };
-    console.log(displayComments)
+  console.log(displayComments);
   return (
     <>
       <main>
@@ -408,50 +414,50 @@ export default function LeadsManagement() {
               {/* Input strip */}
               <div className="position-absolute bottom-0 w-100 p-3 bg-white border-top shadow-lg z-3">
                 <form onSubmit={handleCommentSubmit}>
-                <div className="input-group ">
-                  {/* Agent Selector Dropdown */}
-                  <select
-                    className="form-select border-light-subtle bg-white text-muted"
-                    name= "author"
-                    value={formData.salesAgent?._id }
-                    onChange={handleCommentChange}
-                    style={{
-                      maxWidth: "180px",
-                      paddingLeft: "1rem",
-                      fontSize: "1rem",
-                      cursor: "pointer",
-                    }}
-                   
-                  >
-                    <option value="" hidden>Select agent...</option>
-                    {salesAgent.map((agent) => (
-                      <option key={agent._id} value={agent._id}>
-                        {agent.name}
+                  <div className="input-group ">
+                    {/* Agent Selector Dropdown */}
+                    <select
+                      className="form-select border-light-subtle bg-white text-muted"
+                      name="author"
+                      value={formData.salesAgent?._id}
+                      onChange={handleCommentChange}
+                      style={{
+                        maxWidth: "180px",
+                        paddingLeft: "1rem",
+                        fontSize: "1rem",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <option value="" hidden>
+                        Select agent...
                       </option>
-                    ))}
-                  </select>
+                      {salesAgent.map((agent) => (
+                        <option key={agent._id} value={agent._id}>
+                          {agent.name}
+                        </option>
+                      ))}
+                    </select>
 
-                  {/* Text Input */}
-                  <input
-                    type="text"
-                    name="commentText"
-                    value={commentFormData.commentText}
-                    onChange={handleCommentChange}
-                    className="form-control border-light-subtle bg-light"
-                    placeholder="Type a quick update..."
-                    style={{ padding: "0.75rem 1.25rem", fontSize: "1.1rem" }}
-                  />
+                    {/* Text Input */}
+                    <input
+                      type="text"
+                      name="commentText"
+                      value={commentFormData.commentText}
+                      onChange={handleCommentChange}
+                      className="form-control border-light-subtle bg-light"
+                      placeholder="Type a quick update..."
+                      style={{ padding: "0.75rem 1.25rem", fontSize: "1.1rem" }}
+                    />
 
-                  {/* Post Button */}
-                  <button
-                    className="btn btn-primary px-4 d-flex align-items-center"
-                    type="submit"
-                    
-                  >
-                    <i className="bi bi-send-fill me-2"></i>
-                    Post
-                  </button>
-                </div>
+                    {/* Post Button */}
+                    <button
+                      className="btn btn-primary px-4 d-flex align-items-center"
+                      type="submit"
+                    >
+                      <i className="bi bi-send-fill me-2"></i>
+                      Post
+                    </button>
+                  </div>
                 </form>
               </div>
             </div>
