@@ -273,7 +273,6 @@ export default function Report() {
             weight: "600",
           },
           padding: 15,
-          color: "#212529",
         },
         title: { display: true, text: "Leads Status" },
         grid: {
