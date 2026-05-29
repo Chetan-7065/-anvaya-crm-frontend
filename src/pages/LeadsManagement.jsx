@@ -535,7 +535,7 @@ export default function LeadsManagement() {
                         <select
                           name="salesAgent"
                           className="form-select border-2"
-                          value={formData.salesAgent?._id || ""}
+                          value={formData.salesAgent.name || ""}
                           onChange={handleChange}
                         >
                           {salesAgent.map((agent) => (
