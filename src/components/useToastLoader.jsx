@@ -20,6 +20,12 @@ export const useToastLoader = (loading, error, data, messages) => {
         // Optional: toast.success(messages.success || "Loaded!");
       }
     }
+    return  () => {
+    if (toastId.current) {
+      toast.dismiss(toastId.current);
+      toastId.current = null;
+    }
+    };
   }, [loading, error, data]);
 
   return { hasFetched };

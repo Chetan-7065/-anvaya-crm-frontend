@@ -119,9 +119,11 @@ export default function LeadsList() {
             </div>
           ) : displayLeads.length > 0 ? (
             displayLeads.map((lead) => {
+              console.log(lead)
               return (
-                <div 
-                  key={lead.id} 
+                <Link 
+                  to={`/leadsManagement/${lead._id}`}
+                  key={lead._id} 
                   className="list-group-item list-group-item-action d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center py-3 py-lg-4 px-4 gap-2 gap-lg-0 border-start-0 border-end-0"
                 >
                   {/* Column 1: Lead Name */}
@@ -147,7 +149,7 @@ export default function LeadsList() {
                   {/* Column 4: Sales Agent */}
                   <div style={{ lgWidth: "16.66%" }} className="flex-grow-1 flex-lg-grow-0 col-lg-2 fs-6 text-dark text-truncate">
                     <span className="d-lg-none text-muted small fw-bold text-uppercase d-block mb-1">Sales Agent</span>
-                    {lead.salesAgent.name}
+                   {lead.salesAgent === null || !lead.salesAgent.name ? "Unassigned" : lead.salesAgent.name}
                   </div>
 
                   {/* Column 5: Time To Close */}
@@ -166,7 +168,7 @@ export default function LeadsList() {
                     <span className="d-lg-none text-muted small fw-bold text-uppercase d-block mb-1">Priority</span>
                     <span className="text-danger fw-bolder fs-5">{lead.priority}</span>
                   </div>
-                </div>
+                </Link>
               );
             })
           ) : (

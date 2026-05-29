@@ -57,7 +57,7 @@ export default function LeadsManagement() {
     data: leadsData,
     loading: leadsLoading,
     error: leadsError,
-    refetch,
+    refetch: leadsRefetch,
   } = useFetch("https://anvaya-crm-backend-puce.vercel.app/leads");
   const {
     data: agentsData,
@@ -83,13 +83,22 @@ export default function LeadsManagement() {
     }
   }, [commentsData, leadsData, agentsData]);
 
-  console.log(commentsData);
   const handleEditChanges = (leadId) => {
     const changeLead = leadsData.find((lead) => lead._id === leadId);
+    console.log(changeLead)
     if (changeLead) {
-      setFormData(changeLead);
-      setAgentId(changeLead.salesAgent._id);
+      if(changeLead.salesAgent === null || !changeLead.salesAgent.name){
+        setFormData({
+          ...changeLead,
+          salesAgent: "null"
+        });
+        setAgentId("null");
+      }else{
+        setFormData(changeLead)
+        setAgentId(changeLead.salesAgent._id);
+      }
     }
+    console.log(formData)
   };
 
   const handleChange = (e) => {
@@ -101,7 +110,7 @@ export default function LeadsManagement() {
       setFormData({
         ...formData,
         salesAgent: selectedAgent
-          ? { _id: selectedAgent._id, name: selectedAgent.name }
+          ? selectedAgent._id
           : "",
       });
     } else {
@@ -127,7 +136,6 @@ export default function LeadsManagement() {
     }
   };
 
-  console.log(commentFormData);
 
   const handleMultiSelect = (e, field) => {
     const options = [...e.target.selectedOptions].map((opt) => opt.value);
@@ -138,16 +146,15 @@ export default function LeadsManagement() {
     e.preventDefault();
     const payload = {
       ...formData,
-      author: formData.salesAgent?._id,
     };
     console.log("Lead Created:", payload);
     try {
       const response = await axios.post(
-        `https://anvaya-crm-backend-puce.vercel.app/leads/${leadId}/comments`,
+        `https://anvaya-crm-backend-puce.vercel.app/leads/${leadId}`,
         payload,
       );
       toast.success("Lead updated successfully");
-      refetch();
+      leadsRefetch();
     } catch (error) {
       if (error.response) {
         console.log("Status: ", error.response.status);
@@ -190,7 +197,7 @@ export default function LeadsManagement() {
       }
     }
   };
-  console.log(displayComments);
+  console.log(formData)
   return (
     <>
       <main>
@@ -263,7 +270,7 @@ export default function LeadsManagement() {
                             Agent:
                           </span>
                           <span className="text-dark fw-bold">
-                            {item.salesAgent?.name || "Unassigned"}
+                            {item.salesAgent === null || !item.salesAgent.name ? "Unassigned" : item.salesAgent.name}
                           </span>
                         </div>
 
@@ -550,6 +557,7 @@ export default function LeadsManagement() {
                           value={formData.status || ""}
                           onChange={handleChange}
                         >
+                           <option value="">Select a status</option>
                           {leadStatus.map((status, index) => (
                             <option key={index} value={status}>
                               {status}
@@ -568,6 +576,7 @@ export default function LeadsManagement() {
                           value={formData.priority || "Medium"}
                           onChange={handleChange}
                         >
+                            <option value="">Select priority</option>
                           <option value="High">High</option>
                           <option value="Medium">Medium</option>
                           <option value="Low">Low</option>
@@ -589,7 +598,7 @@ export default function LeadsManagement() {
 
                       <div className="col-12 mb-4">
                         <label className="form-label fw-semibold text-secondary">
-                          Tags:
+                          Tags (Ctrl/Cmd to select multiple):
                         </label>
                         <select
                           multiple

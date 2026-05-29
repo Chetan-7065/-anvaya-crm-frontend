@@ -143,7 +143,7 @@ export default function Home() {
                               {lead.name}
                             </h5>
                             <p className="card-text mb-2 text-muted small">
-                              Agent: <span className="text-dark fw-medium">{lead.salesAgent.name}</span>
+                              Agent: <span className="text-dark fw-medium">{lead.salesAgent === null || !lead.salesAgent.name ? "Unassigned" : lead.salesAgent.name}</span>
                             </p>
 
                             <div className="d-flex flex-wrap gap-3 mb-2 small">
