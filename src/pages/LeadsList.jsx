@@ -38,20 +38,24 @@ export default function LeadsList() {
     const { name, value } = e.target;
     setFilterData({ ...filterData, [name]: value });
   }
-
+  console.log(leads)
+  console.log(agents)
+  console.log(filterData)
   useEffect(() => {
     if (leads.length > 0) {
       const newData = leads.filter((lead) => {
         return Object.entries(filterData).every(([key, value]) => {
           if (!value || value === "All") return true;
-          if (key === "salesAgent") return lead[key].name === value;
+          if (key === "salesAgent") return lead[key]?._id === value;
           return lead[key] === value;
         });
       });
+      console.log(newData)
       setDisplayLeads(newData);
     }
   }, [filterData]);
 
+  console.log(filterData)
   function sortByTimeToClose() {
     const sortedData = [
       ...displayLeads.sort((a, b) => a.timeToClose - b.timeToClose),
@@ -119,7 +123,6 @@ export default function LeadsList() {
             </div>
           ) : displayLeads.length > 0 ? (
             displayLeads.map((lead) => {
-              console.log(lead)
               return (
                 <Link 
                   to={`/leadsManagement/${lead._id}`}
@@ -222,7 +225,7 @@ export default function LeadsList() {
                     <option value="All">Sales Agent: All</option>
                     {agents.length > 0 ? (
                       agents.map((agent, idx) => (
-                        <option key={idx} value={agent.name}>
+                        <option key={idx} value={agent._id}>
                           {agent.name}
                         </option>
                       ))
