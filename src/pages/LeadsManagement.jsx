@@ -538,7 +538,6 @@ export default function LeadsManagement() {
                           value={formData.salesAgent?._id || ""}
                           onChange={handleChange}
                         >
-                          <option value="">Select a Salesman</option>
                           {salesAgent.map((agent) => (
                             <option key={agent._id} value={agent._id}>
                               {agent.name}
