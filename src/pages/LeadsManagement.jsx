@@ -85,6 +85,8 @@ export default function LeadsManagement() {
 
   const handleEditChanges = (leadId) => {
     const changeLead = leadsData.find((lead) => lead._id === leadId);
+    const selectedAgentId = changeLead.salesAgent._id
+    console.log(selectedAgentId)
     console.log(changeLead)
     if (changeLead) {
       if(changeLead.salesAgent === null || !changeLead.salesAgent.name){
@@ -94,7 +96,12 @@ export default function LeadsManagement() {
         });
         setAgentId("null");
       }else{
-        setFormData(changeLead)
+        setFormData({
+        ...changeLead,
+        salesAgent: selectedAgentId
+          ? selectedAgentId
+          : "",
+      })
         setAgentId(changeLead.salesAgent._id);
       }
     }
