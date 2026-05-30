@@ -7,7 +7,6 @@ export default function Sidebar() {
   let location = useLocation();
   return (
     <>
-  {/* 1. We move the background color toggle to the outermost tag so the whole area matches */}
   <main 
     className="sidebar" 
     style={{ 
@@ -15,7 +14,6 @@ export default function Sidebar() {
       transition: "background-color 0.2s ease" 
     }}
   >
-    {/* 2. Changed min-vh-100 to h-100 to let parent height control it, ensuring seamless extension */}
     <div className="d-flex align-items-stretch h-100">
       <div
         className="d-flex flex-column flex-shrink-0 p-2 p-sm-3 text-white position-sticky top-0"
@@ -23,8 +21,7 @@ export default function Sidebar() {
           width: "100%", 
           maxWidth: "400px", 
           minWidth: "70px",
-          // Removed hardcoded background color from here so it doesn't fight the parent
-          height: "100vh" // Keep vh on sticky element so scrolling works beautifully
+          height: "100vh" 
         }}
       >
         {/* Sidebar Header */}
