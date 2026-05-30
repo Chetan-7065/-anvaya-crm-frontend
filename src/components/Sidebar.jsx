@@ -5,10 +5,10 @@ export default function Sidebar() {
   let location = useLocation();
   return (
     <>
-    <main className="sidebar">
-  <div className="d-flex align-items-stretch min-vh-100">
+    <main className="sidebar" style={{backgroundColor: "#1D3758"}}>
+  <div className="d-flex align-items-stretch min-vh-100" >
     <div
-      className="d-flex flex-column flex-shrink-0 p-2 p-sm-3 text-white position-sticky top-0"
+      className="d-flex flex-column flex-shrink-0 p-2 p-sm-3 text-white position-sticky top-0 "
       style={{ 
         width: "100%", 
         maxWidth: "400px", 
