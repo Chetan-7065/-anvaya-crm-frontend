@@ -38,9 +38,6 @@ export default function LeadsList() {
     const { name, value } = e.target;
     setFilterData({ ...filterData, [name]: value });
   }
-  console.log(leads)
-  console.log(agents)
-  console.log(filterData)
   useEffect(() => {
     if (leads.length > 0) {
       const newData = leads.filter((lead) => {
@@ -50,12 +47,10 @@ export default function LeadsList() {
           return lead[key] === value;
         });
       });
-      console.log(newData)
       setDisplayLeads(newData);
     }
   }, [filterData]);
 
-  console.log(filterData)
   function sortByTimeToClose() {
     const sortedData = [
       ...displayLeads.sort((a, b) => a.timeToClose - b.timeToClose),

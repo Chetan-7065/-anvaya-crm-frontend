@@ -49,8 +49,6 @@ const [leadName, setLeadName] = useState("");
     };
 
     const leadDetails = leads.find((lead) => lead.name.toLowerCase() === leadName.trim().toLowerCase() && lead.salesAgent.name.toLowerCase() === salesAgentName.trim().toLowerCase() )
-    console.log(leads)
-    console.log(leadDetails)
     if(!leadDetails){
       toast.error("Please check the lead Name and sales agent")
     }
@@ -85,8 +83,6 @@ const [leadName, setLeadName] = useState("");
     };
 
     const agentDetails = agents.find((agent) => agent.name.toLowerCase() === agentName.trim().toLocaleLowerCase() && agent.email === agentEmail.trim() )
-    console.log(agents)
-    console.log(agentDetails)
     if(!agentDetails){
       toast.error("Please check the Name and Email")
     }
