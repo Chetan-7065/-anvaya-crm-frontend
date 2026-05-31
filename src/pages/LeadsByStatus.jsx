@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import useFetch from "../useFetch";
@@ -27,7 +27,35 @@ export default function LeadsByStatus() {
       setDisplayLeads(data.filter((lead, index) => index < 5));
       // setLeadName(data[0].salesAgent.name)
     }
+   
   }, [data]);
+
+// Inside your React component:
+const uniqueAgentLeads = useMemo(() => {
+  if (!leads || leads.length === 0) {
+    return [];
+  }
+
+  const seenAgentNames = new Set();
+
+  // 3. Filter the leads array
+  return leads.filter(l => {
+    const hasAgentName = l.salesAgent !== null && l.salesAgent?.name;
+    
+    if (hasAgentName) {
+      const agentName = l.salesAgent.name;
+      
+      if (seenAgentNames.has(agentName)) {
+        return false;
+      }
+      
+      seenAgentNames.add(agentName);
+      return true;
+    }
+    return false;
+  });
+
+}, [leads]); // <-- The dependency array: This hook only recalculates when "leads" changes
 
   function handleFilterChange(e) {
     const { name, value } = e.target;
@@ -222,8 +250,8 @@ export default function LeadsByStatus() {
                             <option defaultValue value="All">
                               Sales Agent: All
                             </option>
-                            {leads.length > 0 ? (
-                              leads.filter(l => l.salesAgent !== null && l.salesAgent.name).map((item, index) => {
+                            {uniqueAgentLeads.length > 0 ? (
+                              uniqueAgentLeads.map((item, index) => {
                                 return (
                                   <option key={index} value={item.salesAgent.name}>
                                     {item.salesAgent.name}  

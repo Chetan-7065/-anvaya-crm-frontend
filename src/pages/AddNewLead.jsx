@@ -64,7 +64,7 @@ export default function AddNewLead() {
     <>
     <main className="container-fluid px-2 px-sm-3 px-md-4">
   <div className="row ">
-    <div className="col-12 col-sm-11 col-md-10 col-lg-6 mx-auto mt-2 mt-md-4" style={{ minHeight: "80vh", overflowY: "auto" }}>
+    <div className="col-12 mx-auto mt-2 mt-md-4" style={{ minHeight: "80vh", overflowY: "auto" }}>
       <div className="card shadow-lg border-2 border-light rounded-3 overflow-hidden">
         
         <div className="card-header bg-white py-3 py-md-4 border-bottom border-4 border-primary">
@@ -96,6 +96,7 @@ export default function AddNewLead() {
                 className="form-select border-2 py-2"
                 value={formData.leadSource}
                 onChange={handleChange}
+                required
               >
                 {leadSource.map((source, index) => {
                   return (
@@ -113,6 +114,7 @@ export default function AddNewLead() {
                 className="form-select border-2 py-2"
                 value={formData.salesAgent}
                 onChange={handleChange}
+                required
               >
                 {salesAgent.map((agent) => {
                   return (
@@ -130,6 +132,7 @@ export default function AddNewLead() {
                 className="form-select border-2 py-2"
                 value={formData.status}
                 onChange={handleChange}
+                required
               >
                 {leadStatus.map((status, index) => {
                   return (
@@ -147,6 +150,7 @@ export default function AddNewLead() {
                 className="form-select border-2 py-2"
                 value={formData.priority}
                 onChange={handleChange}
+                required
               >
                 <option value="High">High</option>
                 <option value="Medium">Medium</option>
@@ -163,6 +167,7 @@ export default function AddNewLead() {
                 className="form-control border-2 py-2"
                 value={formData.timeToClose}
                 onChange={handleChange}
+                required
               />
             </div>
 
@@ -176,6 +181,7 @@ export default function AddNewLead() {
                 value={formData.tags}
                 onChange={(e) => handleMultiSelect(e, "tags")}
                 style={{ minHeight: "120px" }} // Ensures multiselect box is easily touchable on mobile devices
+                required 
               >
                 <option value="Enterprise">Enterprise</option>
                 <option value="Urgent">Urgent</option>
@@ -186,7 +192,7 @@ export default function AddNewLead() {
             </div>
 
             {/* Create Lead Button Row */}
-            <div className="col-12 d-grid mt-2 mt-md-3">
+            <div className="col-2 d-grid mt-2 mt-md-3">
               <button
                 type="submit"
                 className="btn btn-primary btn-lg fw-bold shadow-sm py-2.5 py-md-3 text-uppercase fs-6 fs-md-5"

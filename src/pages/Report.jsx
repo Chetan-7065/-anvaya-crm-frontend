@@ -99,10 +99,11 @@ export default function Report() {
   const [barCardPadding, setBarCardPadding] = useState(20);
 
   const processedData = useMemo(() => {
+    console.log(leadData)
     const counts = {};
     leadsData.length > 0 &&
       leadsData
-        .filter((l) => l.salesAgent !== null && l.salesAgent.name)
+        .filter((l) => l.salesAgent !== null && l.salesAgent.name && l.status === "Closed")
         .forEach((leads) => {
           counts[leads.salesAgent.name] =
             (counts[leads.salesAgent.name] || 0) + 1;
@@ -311,7 +312,7 @@ export default function Report() {
                       <div>
                         <h5 className="mb-0 text-dark">
                           <i className="bi bi-gear-wide-connected me-2 text-primary"></i>
-                          Total Leads closed and in pipeline
+                          Leads closed and Leads in pipeline
                         </h5>
                       </div>
                     </div>
@@ -338,12 +339,12 @@ export default function Report() {
                   </div>
                 </div>
 
-                <div className="col-lg-6 mb-4">
+                <div className="col-lg-6 mb-4"> 
                   <div className="card shadow border-0 bg-white h-100">
                     <div className="card-header bg-white py-3 d-flex justify-content-between align-items-center">
                       <h5 className="mb-0 fw-bold">
                         <i className="bi bi-bar-chart-line-fill me-2 text-primary"></i>
-                        Agent Performance
+                        Leads Closed by the sales agents
                       </h5>
                     </div>
                     <div className="card-body overflow-hidden pt-4">

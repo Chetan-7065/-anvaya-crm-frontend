@@ -17,7 +17,7 @@ function DashboardLayout() {
       <Header />
 
       {/* Main wrapper: Changes to column on mobile, row on medium screens (md) and up */}
-      <div className="d-flex flex-column flex-md-row flex-grow-1">
+      <div className="d-flex  flex-row flex-grow-1">
         {/* Sidebar: Make sure your Sidebar component handles hiding/toggling or stacking on mobile */}
         <Sidebar />
 

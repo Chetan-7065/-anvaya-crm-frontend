@@ -85,14 +85,14 @@ export default function LeadsManagement() {
 
   const handleEditChanges = (leadId) => {
     const changeLead = leadsData.find((lead) => lead._id === leadId);
-    const selectedAgentId = changeLead.salesAgent._id
+    const selectedAgentId = changeLead.salesAgent?._id
     if (changeLead) {
       if(changeLead.salesAgent === null || !changeLead.salesAgent.name){
         setFormData({
           ...changeLead,
-          salesAgent: "null"
+          salesAgent: "Unassigned"
         });
-        setAgentId("null");
+        setAgentId("Unassigned");
       }else{
         setFormData({
         ...changeLead,
@@ -538,9 +538,12 @@ export default function LeadsManagement() {
                         <select
                           name="salesAgent"
                           className="form-select border-2"
-                          value={formData.salesAgent || ""}
+                          value={formData.salesAgent}
                           onChange={handleChange}
                         >
+                          <option  value="">
+                              Unassigned
+                            </option>
                           {salesAgent.map((agent) => (
                             <option key={agent._id} value={agent._id}>
                               {agent.name}
