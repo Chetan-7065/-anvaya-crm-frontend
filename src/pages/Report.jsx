@@ -162,8 +162,11 @@ export default function Report() {
         },
         ticks: {
           font: {
-            size: 16,
+            size: 10,
             weight: "400",
+            autoSkip: true,       // Let Chart.js selectively skip names if they truly don't fit
+            maxRotation: 45,      // Rotates names up to 45 degrees to save horizontal space
+            minRotation: 45,
           },
         },
         grid: {
@@ -347,7 +350,7 @@ export default function Report() {
                         Leads Closed by the sales agents
                       </h5>
                     </div>
-                    <div className="card-body overflow-hidden pt-4">
+                    <div className="card-body overflow-hidden pt-4 pb-5">
                       <div
                         className="mx-auto bg-white shadow-sm rounded"
                         style={{
@@ -396,6 +399,18 @@ export default function Report() {
           </div>
         </div>
       </main>
+      <style>{`
+    .card-body canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+    @media (max-width: 991.98px) {
+      .card-body div[style*="position: relative"] {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+    }
+  `}</style>
     </>
   );
 }
