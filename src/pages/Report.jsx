@@ -301,7 +301,7 @@ export default function Report() {
     <>
       <main>
         <div className="row ">
-          <div className="col" style={{ height: "90vh", overflowY: "auto" }}>
+          <div className="col" style={{ minheight: "90vh", overflowY: "auto" }}>
             <h1 className="mb-4">Reports</h1>
             <div className="py-1">
               <div className="row ">

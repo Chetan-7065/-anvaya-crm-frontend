@@ -30,7 +30,7 @@ export default function Sidebar() {
               className="d-flex align-items-center justify-content-center justify-content-md-start mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
             >
               <i className="bi bi-speedometer2 fs-4 me-0 me-md-2"></i>
-              <span className="fs-4 d-none d-md-inline">Dashboard</span>
+              <span className="fs-4 d-none d-md-block">Dashboard</span>
             </Link>
             <hr className="text-white-50" />
 
@@ -97,16 +97,34 @@ export default function Sidebar() {
               </li>
             </ul>
 
-            <style>{`
-          .style-rectangle-btn { border-radius: 0px !important; }
-          @media (max-width: 767.98px) {
-            div.flex-shrink-0 { width: 70px !important; }
+           <style>{`
+        /* Desktop Default sizing rules */
+        .sidebar, div.flex-shrink-0 { 
+          width: 240px; 
+          transition: width 0.2s ease-in-out;
+        }
+
+        /* Mobile View: Collapses the entire sidebar into a clean 65px thin strip automatically */
+        @media (max-width: 767.98px) {
+          .sidebar, div.flex-shrink-0 { 
+            width: 65px !important; 
           }
-          /* Subtle hover state accent for sidebar links */
-          .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+          .nav-link {
+            text-align: center;
+            width: 100%;
+            border-radius: 8px;
           }
-        `}</style>
+        }
+
+        .style-rectangle-btn { border-radius: 0px !important; }
+        
+        .nav-link:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+        .nav-link.active {
+          background-color: rgba(255, 255, 255, 0.2) !important;
+        }
+      `}</style>
           </div>
         </div>
       </main>
