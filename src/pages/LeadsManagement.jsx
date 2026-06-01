@@ -431,6 +431,7 @@ export default function LeadsManagement() {
                       name="author"
                       value={formData.salesAgent?._id}
                       onChange={handleCommentChange}
+                      required
                       style={{
                         maxWidth: "180px",
                         paddingLeft: "1rem",
@@ -457,6 +458,7 @@ export default function LeadsManagement() {
                       className="form-control border-light-subtle bg-light"
                       placeholder="Type a quick update..."
                       style={{ padding: "0.75rem 1.25rem", fontSize: "1.1rem" }}
+                      required
                     />
 
                     {/* Post Button */}
