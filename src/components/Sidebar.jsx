@@ -86,7 +86,11 @@ export default function Sidebar() {
               <li className="w-100 text-center text-md-start">
                 <Link
                   to={"/"}
-                  className="nav-link text-white px-2 px-md-3 d-flex align-items-center justify-content-center justify-content-md-start"
+                  className={`btn px-3 py-2 d-flex align-items-center justify-content-center justify-content-md-start gap-2 ${
+                    isDarkMode
+                      ? "btn-outline-info "
+                      : "btn-outline-light "
+                  }`}
                 >
                   <i
                     className="bi bi-arrow-left fs-5 me-0 me-md-2"
@@ -97,7 +101,7 @@ export default function Sidebar() {
               </li>
             </ul>
 
-           <style>{`
+            <style>{`
         /* Desktop Default sizing rules */
         .sidebar, div.flex-shrink-0 { 
           width: 240px; 

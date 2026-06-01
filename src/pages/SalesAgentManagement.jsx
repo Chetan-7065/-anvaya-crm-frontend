@@ -54,55 +54,6 @@ export default function SalesAgentManagement() {
       <div className="col-12 col-xl-10 py-3">
         <h1 className="mb-3 h2 fw-bold text-dark">Agents List</h1>
 
-        {/* <div className="overflow-x-auto mt-4 rounded border shadow-sm bg-white w-100">
-          <ul className="list-group list-group-flush" style={{ minWidth: "400px" }}>
-            <li className="list-group-item border-bottom border-secondary bg-light fw-bold text-secondary py-3">
-              <div className="row text-center align-items-center">
-                <div className="col-1">S.No</div>
-                <div className="col-4 text-start">Agent</div>
-                <div className="col-5 text-start">Email Address</div>
-                <div className="col-2">Total Leads</div>
-              </div>
-            </li>
-
-            {loading ? (
-              <div className="text-center py-5 my-4">
-                <div className="spinner-border text-primary mb-3" role="status"></div>
-                <p className="fs-5 text-secondary fw-semibold">Loading data, please wait...</p>
-              </div>
-            ) : error ? (
-              <div className="text-center py-5 my-4">
-                <i className="bi bi-exclamation-triangle text-danger display-4 d-block mb-3"></i>
-                <p className="fs-4 text-danger fw-bold">Oops! Something went wrong.</p>
-                <p className="text-muted small">{error.message || "Failed to fetch resource."}</p>
-              </div>
-            ) : statusData.length > 0 ? (
-              statusData.map((agent, index) => (
-                <li key={index} className="list-group-item list-group-item-action border-bottom align-items-center py-3">
-                  <Link
-                    className="row text-center text-decoration-none text-dark align-items-center"
-                    to={`/leadsBySalesAgent/${agent._id}`}
-                  >
-                    <div className="col-1 fw-semibold text-muted">{index + 1}</div>
-          
-                    <div className="col-4 text-start fw-medium text-truncate">{agent.name}</div>
-                    <div className="col-5 text-start text-muted text-break">{agent.email}</div>
-                    <div className="col-2 fw-bold text-primary">
-                      <span className="badge bg-primary-subtle text-primary rounded-pill px-3 py-2">
-                        {agent.leads}
-                      </span>
-                    </div>
-                  </Link>
-                </li>
-              ))
-            ) : (
-              <div className="text-center py-5 my-5 bg-white">
-                <p className="fs-5 text-muted fw-medium m-0">No data available at the moment.</p>
-              </div>
-            )}
-          </ul>
-        </div> */}
-
         <div className="overflow-hidden mt-4 rounded border shadow-sm bg-white w-100">
   <ul className="list-group list-group-flush small w-100 m-0 p-0">
     
@@ -140,11 +91,9 @@ export default function SalesAgentManagement() {
               className="row text-center text-decoration-none text-dark align-items-center g-0"
               to={`/leadsBySalesAgent/${agent._id}`}
             >
-              {/* FIXED: Shifted to col-2 text-start with padding-left (ps-3) to establish space away from Agent column */}
               <div className="col-2 text-start fw-semibold text-muted ps-3">{index + 1}</div>
     
               <div className="col-4 text-start fw-medium text-truncate">
-                {/* Mobile View: Shows First Name + ' ...' if there's a surname */}
                 <span className="d-inline d-md-none">
                   {firstName}{hasSurname ? " ..." : ""}
                 </span>
